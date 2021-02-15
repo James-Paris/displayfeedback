@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Feedback form for users</title>
+
+
+</head>
+<body>
+
+	<form id="form">
+		<h1>How did we do?</h1>
+			<textarea id="feedbackArea" name="feedback" rows="6" cols="25" placeholder="Enter feedback..."></textarea>					
+			<br>
+			<input type="number" id="ratingValue" placeholder="Rating">
+			<br>
+			<input type="submit" value="Submit">
+	</form>
+
+</body>
+<script type="text/javascript">
+
+function onSubmit(event) {
+	event.preventDefault();
+	let data = {feedback: '', rating: 0};
+	data.feedback = document.getElementById("feedbackArea").value;
+	data.rating = document.getElementById("ratingValue").value;
+	
+	console.log(data);
+	fetch('http://localhost:8080/add', {
+		method : 'POST',
+		headers : {
+			'Content-Type' : 'application/json',
+		},
+		body : JSON.stringify(data),
+	}).then(() => window.location.replace("http://localhost:8080/show"))
+}
+
+const form = document.getElementById("form");
+form.addEventListener('submit', onSubmit);
+</script>
+</html>
